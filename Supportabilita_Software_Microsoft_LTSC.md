@@ -22,7 +22,7 @@ Windows 11 Enterprise LTSC 2024 e Windows 11 IoT Enterprise LTSC 2024 sono proge
 | SSMS 22.x | ✅ | ✅ | Continuo | Pienamente supportato |
 | SQL Server 2022 | ✅ | ✅ | Gennaio 2028 (mainstream) | Pienamente supportato |
 | Microsoft Teams (new) | ❌ | ❌ | Bloccato dal 15/08/2025 | Non supportato su LTSC |
-| Microsoft Edge (Chromium) | ✅ | ✅ | Continuo | Preinstallato e pienamente supportato |
+| Microsoft Edge (Chromium) | ⚠️ | ⚠️ | Continuo | Non preinstallato; installabile manualmente, supporto non esplicito per LTSC |
 | Windows Terminal | ✅ | ✅ | Continuo | Installabile via WinGet o MSIX |
 | PowerShell 7.x | ✅ | ✅ | Varia per versione | Installazione separata |
 | Azure CLI | ✅ | ✅ | Continuo | MSI installer |
@@ -137,14 +137,21 @@ Requisiti:
 
 ### Microsoft Edge (Chromium)
 
-**Stato:** ✅ Preinstallato e pienamente supportato.
+**Stato:** ⚠️ Non preinstallato, installabile manualmente.
 
-- A differenza di Windows 10 LTSC, **Windows 11 LTSC 2024 include Edge Chromium preinstallato**
-- Riceve aggiornamenti automatici tramite Windows Update
-- Pienamente supportato come componente del sistema operativo
-- Distribuibile e gestibile tramite Intune e Group Policy
+- Edge **non è incluso** nell'immagine Windows 11 LTSC 2024 di default
+- Può essere scaricato e installato manualmente (MSI o WinGet)
+- Una volta installato, riceve aggiornamenti automatici
+- Non esiste una dichiarazione esplicita di supporto Microsoft per Edge su LTSC
+- Distribuibile tramite Intune come Win32 app o Group Policy
 
-> **Nota:** L'assenza di Edge era una caratteristica di Windows 10 LTSC. Con Windows 11 LTSC 2024 questo è cambiato: Edge è ora un componente inbox.
+```cmd
+:: Installazione tramite WinGet (se disponibile)
+winget install Microsoft.Edge
+
+:: Alternativa: download MSI da
+:: https://www.microsoft.com/edge/business/download
+```
 
 ---
 
