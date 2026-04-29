@@ -1,118 +1,302 @@
 MIME-Version: 1.0
 Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 From: Roberto Gramegna <robgrame@microsoft.com>
 To: 
-Subject: Windows 11 LTSC e IoT Enterprise LTSC 2024 - Riepilogo documentazione operativa
-Date: Tue, 29 Apr 2026 18:15:00 +0200
+Subject: Windows 11 LTSC e IoT Enterprise 2024 - Analisi completa e documentazione operativa
+Date: Tue, 29 Apr 2025 19:30:00 +0200
 X-Priority: 3
 
 <!DOCTYPE html>
 <html>
 <head>
 <style>
-body { font-family: Segoe UI, Calibri, Arial, sans-serif; font-size: 14px; color: #333; line-height: 1.6; }
-h2 { color: #0078D4; border-bottom: 1px solid #0078D4; padding-bottom: 4px; }
-h3 { color: #333; margin-top: 20px; }
-table { border-collapse: collapse; width: 100%; margin: 10px 0; }
-th { background-color: #0078D4; color: white; padding: 8px 12px; text-align: left; }
-td { border: 1px solid #ddd; padding: 8px 12px; }
+body { font-family: Segoe UI, Calibri, Arial, sans-serif; font-size: 14px; color: #333; line-height: 1.6; max-width: 900px; margin: 0 auto; }
+h2 { color: #0078D4; border-bottom: 2px solid #0078D4; padding-bottom: 6px; margin-top: 30px; }
+h3 { color: #1a1a1a; margin-top: 20px; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+th { background-color: #0078D4; color: white; padding: 10px 12px; text-align: left; font-size: 13px; }
+td { border: 1px solid #ddd; padding: 8px 12px; font-size: 13px; }
 tr:nth-child(even) { background-color: #f9f9f9; }
-.highlight { background-color: #FFF3CD; padding: 10px; border-left: 4px solid #FFC107; margin: 10px 0; }
-.alert { background-color: #F8D7DA; padding: 10px; border-left: 4px solid #DC3545; margin: 10px 0; }
+.highlight { background-color: #FFF3CD; padding: 12px 16px; border-left: 4px solid #FFC107; margin: 14px 0; border-radius: 4px; }
+.alert { background-color: #F8D7DA; padding: 12px 16px; border-left: 4px solid #DC3545; margin: 14px 0; border-radius: 4px; }
+.info { background-color: #D1ECF1; padding: 12px 16px; border-left: 4px solid #17A2B8; margin: 14px 0; border-radius: 4px; }
 .ok { color: #28A745; font-weight: bold; }
 .ko { color: #DC3545; font-weight: bold; }
-.warn { color: #FFC107; font-weight: bold; }
+.warn { color: #856404; font-weight: bold; }
+code { background-color: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: Consolas, monospace; font-size: 12px; }
+ul, ol { margin: 8px 0; }
+li { margin: 4px 0; }
+.section-intro { color: #555; font-style: italic; margin-bottom: 12px; }
 </style>
 </head>
 <body>
 
 <p>Gentile Cliente,</p>
 
-<p>di seguito un riepilogo sintetico della documentazione prodotta in merito alla gestione di <strong>Windows 11 Enterprise LTSC 2024</strong> e <strong>Windows 11 IoT Enterprise LTSC 2024</strong>. I documenti completi sono disponibili nella repository condivisa.</p>
+<p>a seguito dell'analisi condotta sulle edizioni <strong>Windows 11 Enterprise LTSC 2024</strong>, <strong>Windows 11 IoT Enterprise LTSC 2024</strong> e <strong>Windows 11 IoT Enterprise GA</strong>, abbiamo prodotto una documentazione operativa completa che copre tutti gli aspetti rilevanti per il vostro scenario di deployment.</p>
+
+<p>Di seguito riportiamo i risultati principali dell'analisi per ciascuna area. La documentazione completa, con procedure dettagliate e comandi operativi, &egrave; disponibile nella repository condivisa e nel documento Word allegato.</p>
 
 <hr>
 
-<h2>1. Attivazione KMS</h2>
+<h2>1. Mappa delle edizioni Windows 11 IoT / LTSC</h2>
 
-<ul>
-<li><strong>Non serve</strong> un server KMS dedicato: =C3=A8 sufficiente aggiungere una nuova KMS Host Key (CSVLK) al server esistente</li>
-<li>Procedura: installare la CSVLK via <code>slmgr /ipk</code>, attivare con <code>slmgr /ato</code></li>
-<li>Soglia minima: <strong>25 client</strong> per l'attivazione KMS</li>
-<li>Le GVLK per i client sono documentate (Enterprise LTSC e IoT Enterprise LTSC)</li>
-</ul>
-
-<h2>2. Distribuzione App Store tramite Intune</h2>
-
-<ul>
-<li>Il <strong>Microsoft Store non =C3=A8 presente</strong> su LTSC per impostazione predefinita</li>
-<li>=C3=88 possibile distribuire app tramite Intune usando <strong>"Microsoft Store app (new)"</strong> che sfrutta WinGet in background</li>
-<li><strong>Prerequisito:</strong> WinGet deve essere presente sul dispositivo (installabile tramite App Installer)</li>
-<li>Alternativa per scenari offline: distribuzione come Win32 app (.intunewin)</li>
-</ul>
-
-<div class="highlight">
-<strong>Nota importante:</strong> Microsoft dichiara che il supporto per app progettate per il canale GA =C3=A8 "limited" su LTSC. Le app funzionano ma non sono formalmente garantite n=C3=A9 coperte dal supporto.
-</div>
-
-<h2>3. Personalizzazione Immagine OS</h2>
+<p class="section-intro">Il naming Microsoft pu&ograve; generare confusione. Ecco una mappa chiara delle edizioni analizzate:</p>
 
 <table>
-<tr><th>Operazione</th><th>Supportata</th></tr>
-<tr><td>Integrazione driver</td><td class="ok">=E2=9C=85 S=C3=AC</td></tr>
-<tr><td>Cumulative Update (SSU inclusa)</td><td class="ok">=E2=9C=85 S=C3=AC</td></tr>
-<tr><td>Language Pack e componenti linguistici</td><td class="ok">=E2=9C=85 S=C3=AC (offline, prima del primo boot)</td></tr>
-<tr><td>Features on Demand (sottoinsieme)</td><td class="ok">=E2=9C=85 S=C3=AC</td></tr>
-<tr><td>Microsoft Store / Edge / App consumer</td><td class="ko">=E2=9D=8C No</td></tr>
+<tr><th>Edizione</th><th>Feature Update</th><th>Supporto</th><th>Target</th></tr>
+<tr><td><strong>Windows 11 Enterprise LTSC 2024</strong></td><td>&#10060; Nessuno</td><td>5 anni</td><td>Workstation stabilit&agrave; a lungo termine</td></tr>
+<tr><td><strong>Windows 11 IoT Enterprise LTSC 2024</strong></td><td>&#10060; Nessuno</td><td><strong>10 anni</strong></td><td>Dispositivi embedded, kiosk, SCADA, medicali</td></tr>
+<tr><td><strong>Windows 11 IoT Enterprise GA (24H2)</strong></td><td>&#9989; Annuali</td><td>36 mesi/versione</td><td>Dispositivi IoT con necessit&agrave; di aggiornamento</td></tr>
 </table>
 
-<p><strong>IoT Enterprise LTSC</strong> offre feature aggiuntive per scenari embedded: Unified Write Filter, Shell Launcher V2, Keyboard Filter, Custom Logon.</p>
+<div class="info">
+<strong>&#x2139;&#xFE0F; Punto chiave:</strong> IoT Enterprise LTSC e IoT Enterprise GA condividono le stesse feature embedded (UWF, Shell Launcher, Keyboard Filter), ma differiscono radicalmente nel modello di servicing e nella compatibilit&agrave; software.
+</div>
 
-<h2>4. Compatibilit=C3=A0 Software Microsoft</h2>
+<h2>2. Attivazione KMS</h2>
+
+<p class="section-intro">Non &egrave; necessario un server KMS dedicato. &Egrave; sufficiente aggiungere una nuova CSVLK al server esistente.</p>
 
 <table>
-<tr><th>Software</th><th>Supportato</th><th>Note</th></tr>
-<tr><td>Office LTSC 2024</td><td class="ok">=E2=9C=85</td><td>Combinazione raccomandata, supporto fino a Ott 2029</td></tr>
-<tr><td>Microsoft 365 Apps</td><td class="ko">=E2=9D=8C</td><td><strong>Non supportato su LTSC</strong></td></tr>
-<tr><td>.NET 8 / .NET Framework 4.8.1</td><td class="ok">=E2=9C=85</td><td>Pienamente supportato</td></tr>
-<tr><td>Power BI Desktop</td><td class="warn">=E2=9C=85 *</td><td>Funzionante; supporto LTSC non dichiarato esplicitamente</td></tr>
-<tr><td>Visual Studio 2022</td><td class="warn">=E2=9C=85 *</td><td>Funzionante; LTSC non menzionato nei requisiti ufficiali</td></tr>
-<tr><td>SSMS 22.x / SQL Server 2022</td><td class="ok">=E2=9C=85</td><td>Pienamente supportato</td></tr>
-<tr><td>Microsoft Teams</td><td class="ko">=E2=9D=8C</td><td><strong>Bloccato dal 15/08/2025</strong></td></tr>
-<tr><td>Microsoft Edge</td><td class="warn">=E2=9A=A0=EF=B8=8F</td><td>Non preinstallato; installabile manualmente</td></tr>
+<tr><th>Aspetto</th><th>Dettaglio</th></tr>
+<tr><td>Server KMS richiesto</td><td>Windows Server 2016 o successivo (esistente)</td></tr>
+<tr><td>Procedura server</td><td><code>slmgr /ipk [CSVLK]</code> &rarr; <code>slmgr /ato</code></td></tr>
+<tr><td>Soglia attivazione</td><td>Minimo <strong>25 client</strong> Windows nella rete</td></tr>
+<tr><td>Porta richiesta</td><td>TCP 1688 tra client e server KMS</td></tr>
+<tr><td>Retrocompatibilit&agrave;</td><td>La CSVLK Win11 attiva anche versioni precedenti</td></tr>
+</table>
+
+<h3>GVLK per i client</h3>
+
+<table>
+<tr><th>Edizione</th><th>GVLK (Generic Volume License Key)</th></tr>
+<tr><td>Windows 11 Enterprise LTSC 2024</td><td><code>M7XTQ-FN8P6-TTKYV-9D4CC-J462D</code></td></tr>
+<tr><td>Windows 11 IoT Enterprise LTSC 2024</td><td><code>KBN8V-HFGQ4-MGXVD-347P6-PDQGT</code></td></tr>
+<tr><td>Windows 11 IoT Enterprise 24H2 (GA)</td><td><code>XQQYW-NFFMW-XJPTT-K8732-CKFFD</code></td></tr>
+</table>
+
+<div class="highlight">
+<strong>&#9888;&#xFE0F; Attenzione:</strong> Le GVLK sono diverse per ciascuna edizione. Assicurarsi di usare la chiave corretta per l'edizione installata.
+</div>
+
+<h2>3. Distribuzione App tramite Intune</h2>
+
+<p class="section-intro">Il Microsoft Store non &egrave; presente su nessuna edizione LTSC n&eacute; IoT. La distribuzione app avviene tramite WinGet/Intune.</p>
+
+<h3>Modalit&agrave; di distribuzione disponibili</h3>
+
+<table>
+<tr><th>Metodo</th><th>Descrizione</th><th>Prerequisito</th></tr>
+<tr><td><strong>Microsoft Store app (new)</strong></td><td>Intune usa WinGet in background per installare app dal catalogo</td><td>WinGet (App Installer) sul dispositivo</td></tr>
+<tr><td><strong>Win32 app (.intunewin)</strong></td><td>Pacchetto tradizionale con detection rules</td><td>Nessuno (funziona offline)</td></tr>
+<tr><td><strong>LOB app (MSIX/AppX)</strong></td><td>Sideload di pacchetti firmati</td><td>Sideloading abilitato (default Win11)</td></tr>
+</table>
+
+<h3>Prerequisiti per WinGet su LTSC</h3>
+<ol>
+<li><strong>Microsoft.VCLibs</strong> (VC++ UWP Desktop Runtime)</li>
+<li><strong>Microsoft.UI.Xaml</strong> (framework UI)</li>
+<li><strong>Microsoft.DesktopAppInstaller</strong> (include WinGet)</li>
+</ol>
+
+<div class="highlight">
+<strong>Posizione ufficiale Microsoft:</strong> Il supporto per app Store su LTSC &egrave; descritto come <em>"might be limited"</em>. Le app funzionano tecnicamente, ma <strong>non sono coperte da supporto ufficiale</strong>. Eventuali incompatibilit&agrave; future non saranno prioritarie per Microsoft. Si raccomanda di testare in ambiente pilota e avere un piano di fallback.
+</div>
+
+<h2>4. Personalizzazione Immagine OS</h2>
+
+<p class="section-intro">Le personalizzazioni devono essere eseguite offline (prima del primo boot) tramite DISM.</p>
+
+<h3>Operazioni supportate</h3>
+
+<table>
+<tr><th>Operazione</th><th>Supportata</th><th>Note</th></tr>
+<tr><td>Integrazione driver (.inf firmati)</td><td class="ok">&#9989;</td><td>Singoli o ricorsivi via DISM</td></tr>
+<tr><td>Cumulative Update</td><td class="ok">&#9989;</td><td>SSU ora inclusa nel CU (novit&agrave; 24H2)</td></tr>
+<tr><td>Language Pack</td><td class="ok">&#9989;</td><td><strong>Obbligatorio offline</strong>, prima del primo boot</td></tr>
+<tr><td>Features on Demand</td><td class="ok">&#9989;</td><td>Sottoinsieme LTSC; ISO FoD deve corrispondere alla build</td></tr>
+<tr><td>Branding OEM (unattend.xml)</td><td class="ok">&#9989;</td><td>Logo, support info, OOBE customization</td></tr>
+<tr><td>Microsoft Store</td><td class="ko">&#10060;</td><td>Rimosso dall'immagine, non reintegrabile</td></tr>
+<tr><td>Microsoft Edge</td><td class="ko">&#10060;</td><td>Non integrabile via DISM (solo post-install)</td></tr>
+<tr><td>App consumer (Teams, Clipchamp)</td><td class="ko">&#10060;</td><td>Pacchetti AppX consumer non compatibili</td></tr>
+</table>
+
+<h3>Componenti rimossi in Windows 11 24H2 / LTSC 2024</h3>
+<ul>
+<li><strong>WordPad</strong> &mdash; completamente rimosso, non pi&ugrave; disponibile come FoD</li>
+<li><strong>Steps Recorder</strong> &mdash; completamente rimosso</li>
+</ul>
+
+<h3>Feature esclusive IoT Enterprise (LTSC e GA)</h3>
+
+<table>
+<tr><th>Feature</th><th>Descrizione</th><th>Disponibile su Enterprise LTSC standard?</th></tr>
+<tr><td>Unified Write Filter (UWF)</td><td>Protegge il disco da scritture; overlay in RAM</td><td class="ko">&#10060;</td></tr>
+<tr><td>Shell Launcher V2</td><td>Sostituisce Explorer con app custom</td><td class="ko">&#10060;</td></tr>
+<tr><td>Keyboard Filter</td><td>Blocca combinazioni tasti (es. Ctrl+Alt+Del)</td><td class="ko">&#10060;</td></tr>
+<tr><td>Gesture Filter</td><td>Disabilita gesture touch di sistema</td><td class="ko">&#10060;</td></tr>
+<tr><td>Custom Logon</td><td>Nasconde elementi interfaccia di logon</td><td class="ko">&#10060;</td></tr>
+</table>
+
+<h2>5. Compatibilit&agrave; Software Microsoft</h2>
+
+<p class="section-intro">Questa &egrave; l'area con le maggiori criticit&agrave;. Diversi prodotti Microsoft non supportano ufficialmente le edizioni LTSC.</p>
+
+<h3>Matrice di supporto completa</h3>
+
+<table>
+<tr><th>Software</th><th>Enterprise LTSC</th><th>IoT LTSC</th><th>IoT GA</th><th>Note critiche</th></tr>
+<tr><td>Office LTSC 2024</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td>Combinazione raccomandata. Supporto fino a Ott 2029</td></tr>
+<tr><td>Microsoft 365 Apps</td><td class="ko">&#10060;</td><td class="ko">&#10060;</td><td class="ok">&#9989;</td><td><strong>Non supportato su LTSC</strong>; richiede OS con Modern Lifecycle</td></tr>
+<tr><td>.NET 8 (LTS)</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td>EOL: Novembre 2026</td></tr>
+<tr><td>.NET 9 (STS)</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td>EOL: Maggio 2026</td></tr>
+<tr><td>Power BI Desktop</td><td class="warn">&#9989;*</td><td class="warn">&#9989;*</td><td class="ok">&#9989;</td><td>Funzionante; supporto LTSC non dichiarato esplicitamente</td></tr>
+<tr><td>Visual Studio 2022/2026</td><td class="ko">&#10060;</td><td class="ko">&#10060;</td><td class="ko">&#10060;</td><td><strong>Policy esplicita:</strong> "VS isn't intended to run on LTSC". IoT Enterprise blanket-escluso</td></tr>
+<tr><td>SSMS 22.x</td><td class="ko">&#10060;</td><td class="ko">&#10060;</td><td class="ko">&#10060;</td><td><strong>Esplicito nella doc:</strong> "Windows Enterprise LTSC editions" non supportate. IoT escluso</td></tr>
+<tr><td>SQL Server 2022</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td>Mainstream support fino a Gen 2028</td></tr>
+<tr><td>Microsoft Teams (new)</td><td class="ko">&#10060;</td><td class="ko">&#10060;</td><td class="ok">&#9989;</td><td><strong>Bloccato dal 15/08/2025 su LTSC.</strong> Funziona su IoT GA</td></tr>
+<tr><td>Microsoft Edge</td><td class="warn">&#9888;&#xFE0F;</td><td class="warn">&#9888;&#xFE0F;</td><td class="ok">&#9989;</td><td>Non preinstallato su LTSC; installabile manualmente. Preinstallato su GA</td></tr>
+<tr><td>PowerShell 7.x / Azure CLI</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td>Pienamente supportato su tutte</td></tr>
 </table>
 
 <div class="alert">
-<strong>=E2=9A=A0=EF=B8=8F Punti critici:</strong><br>
-=E2=80=A2 <strong>Microsoft 365 Apps</strong> non =C3=A8 supportato su LTSC =E2=80=94 usare Office LTSC 2024<br>
-=E2=80=A2 <strong>Microsoft Teams</strong> sar=C3=A0 bloccato dal 15 agosto 2025 =E2=80=94 usare Teams Web App come alternativa<br>
-=E2=80=A2 Per <strong>software di terze parti</strong>, verificare sempre con il vendor la compatibilit=C3=A0 specifica con le edizioni LTSC
+<strong>&#9888;&#xFE0F; Punti critici da evidenziare:</strong><br><br>
+&#8226; <strong>Visual Studio (tutte le versioni)</strong> &mdash; NON supportato su LTSC n&eacute; su IoT Enterprise (GA o LTSC). Per lo sviluppo, usare macchine con Windows 11 Pro/Enterprise GA o Windows Server.<br><br>
+&#8226; <strong>SSMS 22</strong> &mdash; NON supportato su LTSC n&eacute; IoT. Alternativa: Azure Data Studio o SSMS da macchina remota non-LTSC.<br><br>
+&#8226; <strong>Microsoft 365 Apps</strong> &mdash; NON supportato su LTSC. Usare Office LTSC 2024 per la produttivit&agrave; locale.<br><br>
+&#8226; <strong>Microsoft Teams</strong> &mdash; bloccato dal 15 agosto 2025 su LTSC. Alternativa: Teams Web App via browser o Azure Virtual Desktop con Windows 11 GA.
 </div>
 
-<h2>5. Ciclo di vita</h2>
+<h3>Alternative raccomandate per software non supportato</h3>
 
 <table>
-<tr><th>Edizione</th><th>Supporto</th></tr>
-<tr><td>Windows 11 Enterprise LTSC 2024</td><td>5 anni (fino a ~2029)</td></tr>
-<tr><td>Windows 11 IoT Enterprise LTSC 2024</td><td><strong>10 anni</strong> (fino a ~2034)</td></tr>
-<tr><td>Office LTSC 2024</td><td>5 anni (fino a Ott 2029)</td></tr>
+<tr><th>Esigenza</th><th>Su LTSC usare</th></tr>
+<tr><td>Sviluppo software</td><td>VS Code (supportato) + build remota, oppure VS da macchina non-LTSC</td></tr>
+<tr><td>Gestione database SQL</td><td>Azure Data Studio, oppure SSMS da jump host Windows 11 GA</td></tr>
+<tr><td>Collaborazione Teams</td><td>Teams Web App (Edge/Chrome), oppure AVD con Win11 GA</td></tr>
+<tr><td>Suite Office completa con cloud</td><td>Office LTSC 2024 (funzionalit&agrave; cloud M365 supportate fino a Ott 2029)</td></tr>
+</table>
+
+<h2>6. Gestione dispositivi: Intune e SCCM</h2>
+
+<p class="section-intro">Entrambi gli strumenti supportano pienamente tutte le edizioni IoT Enterprise.</p>
+
+<table>
+<tr><th>Strumento</th><th>IoT Enterprise GA</th><th>IoT Enterprise LTSC</th><th>Enterprise LTSC</th></tr>
+<tr><td>Microsoft Intune</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td></tr>
+<tr><td>SCCM / Configuration Manager</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td></tr>
+<tr><td>Co-management</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td></tr>
+<tr><td>Azure Arc</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td></tr>
+<tr><td>Autopilot enrollment</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td><td class="ok">&#9989;</td></tr>
+</table>
+
+<h3>Differenze nel patching</h3>
+
+<table>
+<tr><th>Tipo di update</th><th>IoT Enterprise GA</th><th>LTSC (Enterprise e IoT)</th></tr>
+<tr><td>Quality Update (CU mensile)</td><td class="ok">&#9989; Gestibile via Intune/SCCM/WSUS</td><td class="ok">&#9989; Gestibile via Intune/SCCM/WSUS</td></tr>
+<tr><td>Feature Update (upgrade annuale)</td><td class="ok">&#9989; Gestibile via Intune WUfB</td><td>N/A &mdash; non disponibile su LTSC</td></tr>
+</table>
+
+<h2>7. Ciclo di vita comparato</h2>
+
+<table>
+<tr><th>Edizione / Prodotto</th><th>Tipo supporto</th><th>Durata</th><th>Fine stimata</th></tr>
+<tr><td>Windows 11 Enterprise LTSC 2024</td><td>Fixed Lifecycle</td><td>5 anni</td><td>~Ottobre 2029</td></tr>
+<tr><td>Windows 11 IoT Enterprise LTSC 2024</td><td>Fixed Lifecycle</td><td><strong>10 anni</strong></td><td>~Ottobre 2034</td></tr>
+<tr><td>Windows 11 IoT Enterprise GA 24H2</td><td>Modern Lifecycle</td><td>36 mesi</td><td>Ottobre 2027</td></tr>
+<tr><td>Office LTSC 2024</td><td>Fixed Lifecycle</td><td>5 anni</td><td>Ottobre 2029</td></tr>
+<tr><td>.NET 8 (LTS)</td><td>LTS</td><td>3 anni</td><td>Novembre 2026</td></tr>
+<tr><td>.NET 9 (STS)</td><td>STS</td><td>18 mesi</td><td>Maggio 2026</td></tr>
+</table>
+
+<h2>8. Focus: Windows 11 IoT Enterprise GA (non-LTSC)</h2>
+
+<p class="section-intro">Dall'analisi &egrave; emersa una distinzione fondamentale che merita un approfondimento dedicato: esiste una versione di Windows 11 IoT Enterprise che <strong>non &egrave; LTSC</strong> e segue il canale General Availability con feature update regolari.</p>
+
+<div class="info">
+<strong>&#x2139;&#xFE0F; Perch&eacute; &egrave; rilevante:</strong> Windows 11 IoT Enterprise GA offre le <strong>stesse funzionalit&agrave; embedded</strong> di LTSC (UWF, Shell Launcher, Keyboard Filter, Custom Logon) ma con un modello di servicing completamente diverso &mdash; e soprattutto con una <strong>compatibilit&agrave; software nettamente superiore</strong>.
+</div>
+
+<h3>Cosa cambia rispetto a LTSC</h3>
+
+<table>
+<tr><th>Caratteristica</th><th>IoT Enterprise GA</th><th>IoT Enterprise LTSC</th></tr>
+<tr><td>Feature update</td><td class="ok">&#9989; Annuali (24H2, 25H2, ecc.)</td><td>&#10060; Nessuno</td></tr>
+<tr><td>Supporto per versione</td><td>36 mesi</td><td><strong>10 anni</strong></td></tr>
+<tr><td>Microsoft Edge</td><td class="ok">&#9989; Preinstallato</td><td>&#10060; Non incluso</td></tr>
+<tr><td>Microsoft Teams</td><td class="ok">&#9989; Supportato</td><td class="ko">&#10060; Bloccato dal 15/08/2025</td></tr>
+<tr><td>Microsoft 365 Apps</td><td class="ok">&#9989; Supportato</td><td class="ko">&#10060; Non supportato</td></tr>
+<tr><td>Visual Studio / SSMS</td><td class="ko">&#10060; Non supportato</td><td class="ko">&#10060; Non supportato</td></tr>
+<tr><td>Feature embedded (UWF, Shell Launcher)</td><td class="ok">&#9989; Identiche</td><td class="ok">&#9989; Identiche</td></tr>
+<tr><td>Intune / SCCM</td><td class="ok">&#9989; Pieno supporto</td><td class="ok">&#9989; Pieno supporto</td></tr>
+<tr><td>Feature Update via Intune (WUfB)</td><td class="ok">&#9989; Gestibile</td><td>N/A</td></tr>
+<tr><td>GVLK per KMS</td><td><code>XQQYW-NFFMW-XJPTT-K8732-CKFFD</code></td><td><code>KBN8V-HFGQ4-MGXVD-347P6-PDQGT</code></td></tr>
+</table>
+
+<h3>Quando considerare IoT Enterprise GA invece di LTSC</h3>
+
+<ul>
+<li><strong>Necessit&agrave; di Teams desktop o Microsoft 365 Apps</strong> &rarr; solo IoT GA li supporta</li>
+<li><strong>Dispositivi con vita utile &lt; 5 anni</strong> dove i feature update sono accettabili</li>
+<li><strong>Thin client con produttivit&agrave; utente</strong> che richiedono software aggiornato</li>
+<li><strong>Chioschi/POS con gestione centralizzata</strong> e aggiornamenti controllati via Intune</li>
+</ul>
+
+<h3>Quando restare su LTSC</h3>
+
+<ul>
+<li><strong>Dispositivi con vita utile &gt; 5 anni</strong> (stabilit&agrave; garantita 10 anni)</li>
+<li><strong>Ambienti regolamentati</strong> dove i feature update non sono ammessi</li>
+<li><strong>Dispositivi disconnessi o air-gapped</strong></li>
+<li><strong>Scenari SCADA, medicali, ATM</strong> che richiedono immutabilit&agrave;</li>
+</ul>
+
+<div class="highlight">
+<strong>&#9888;&#xFE0F; Attenzione al naming:</strong> La documentazione Microsoft usa spesso "Windows IoT Enterprise" senza specificare se si tratta di GA o LTSC. Questo genera confusione. Nelle tabelle di supporto, "Windows Enterprise IoT" come esclusione (es. Visual Studio, SSMS) copre <strong>entrambe</strong> le varianti (GA e LTSC). Verificare sempre quale edizione specifica &egrave; menzionata.
+</div>
+
+<h2>9. Software di terze parti</h2>
+
+<div class="highlight">
+<strong>&#9888;&#xFE0F; Raccomandazione importante:</strong> Per qualsiasi software non-Microsoft (antivirus, agenti di monitoraggio, middleware, applicazioni LOB, strumenti di gestione, ecc.) &egrave; <strong>indispensabile verificare direttamente con il rispettivo vendor</strong> la compatibilit&agrave; e il supporto ufficiale sulle edizioni LTSC/IoT Enterprise.<br><br>
+Non assumere compatibilit&agrave; basandosi sul supporto generico a "Windows 11": le edizioni LTSC hanno componenti mancanti (Store, AppX framework ridotto, assenza di feature update) che possono causare incompatibilit&agrave; non prevedibili.
+</div>
+
+<hr>
+
+<h2>Documentazione prodotta</h2>
+
+<p>Nella repository condivisa sono disponibili i seguenti documenti dettagliati:</p>
+
+<table>
+<tr><th>#</th><th>Documento</th><th>Contenuto</th></tr>
+<tr><td>1</td><td>KMS_Windows11_LTSC_Activation.md</td><td>Procedura completa attivazione KMS server e client</td></tr>
+<tr><td>2</td><td>Intune_StoreApps_Windows11_LTSC.md</td><td>Distribuzione app Store tramite Intune/WinGet</td></tr>
+<tr><td>3</td><td>Personalizzazione_Immagine_Windows11_LTSC.md</td><td>Creazione immagine custom con DISM, driver, language pack, IoT lockdown</td></tr>
+<tr><td>4</td><td>Supportabilita_Software_Microsoft_LTSC.md</td><td>Matrice compatibilit&agrave; software con riferimenti ufficiali</td></tr>
+<tr><td>5</td><td>IoT_Enterprise_GA_vs_LTSC.md</td><td>Confronto completo GA vs LTSC, guida alla scelta</td></tr>
+<tr><td>6</td><td>Windows11_LTSC_IoT_Guida_Completa.docx</td><td>Documento Word consolidato con tutti i contenuti</td></tr>
 </table>
 
 <hr>
 
-<h3>Prossimi passi</h3>
+<h3>Prossimi passi consigliati</h3>
 
 <ol>
-<li>Revisione congiunta della documentazione completa</li>
-<li>Verifica con i vendor di terze parti per la compatibilit=C3=A0 dei software specifici del vostro ambiente</li>
-<li>Definizione dell'immagine di riferimento e piano di deployment</li>
+<li><strong>Revisione congiunta</strong> della documentazione e validazione degli scenari applicabili al vostro ambiente</li>
+<li><strong>Censimento software di terze parti</strong> e verifica con i rispettivi vendor della compatibilit&agrave; LTSC/IoT</li>
+<li><strong>Scelta dell'edizione</strong> (Enterprise LTSC vs IoT LTSC vs IoT GA) in base ai requisiti software e al ciclo di vita dei dispositivi</li>
+<li><strong>Proof of Concept</strong> &mdash; creazione immagine pilota e test della catena completa (KMS, Intune enrollment, app deployment)</li>
+<li><strong>Piano di deployment</strong> con definizione dell'immagine di riferimento e delle policy Intune/SCCM</li>
 </ol>
 
-<p>Resto a disposizione per eventuali chiarimenti o approfondimenti.</p>
+<p>Resto a disposizione per eventuali chiarimenti, approfondimenti o per pianificare una sessione di revisione congiunta.</p>
 
 <p>Cordiali saluti,<br>
-<strong>Roberto Gramegna</strong><br>
-</p>
+<strong>Roberto Gramegna</strong></p>
 
 </body>
 </html>
