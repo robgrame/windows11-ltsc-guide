@@ -18,8 +18,8 @@ Windows 11 Enterprise LTSC 2024 e Windows 11 IoT Enterprise LTSC 2024 sono proge
 | .NET 9 (STS) | ✅ | ✅ | Maggio 2026 | x64, x86, Arm64 |
 | .NET Framework 4.8.1 | ✅ | ✅ | Incluso nel OS | Preinstallato |
 | Power BI Desktop | ✅ * | ✅ * | Continuo | Richiede .NET 4.7.2+ e WebView2 (*supporto inferito, non dichiarato esplicitamente per LTSC) |
-| Visual Studio 2022 | ✅ * | ✅ * | Continuo | Funzionante; LTSC non menzionato esplicitamente nei requisiti (*supporto inferito da "Windows 11 Enterprise") |
-| SSMS 22.x | ✅ | ✅ | Continuo | Pienamente supportato |
+| Visual Studio 2022 | ⚠️ | ❌ | Continuo | Win10 LTSC escluso esplicitamente; Win11 LTSC non menzionato (né supportato né escluso); IoT escluso |
+| SSMS 22.x | ❌ | ❌ | N/A | **Non supportato su edizioni LTSC** (esplicito nella doc) |
 | SQL Server 2022 | ✅ | ✅ | Gennaio 2028 (mainstream) | Pienamente supportato |
 | Microsoft Teams (new) | ❌ | ❌ | Bloccato dal 15/08/2025 | Non supportato su LTSC |
 | Microsoft Edge (Chromium) | ⚠️ | ⚠️ | Continuo | Non preinstallato; installabile manualmente, supporto non esplicito per LTSC |
@@ -102,22 +102,40 @@ Requisiti:
 
 ### Visual Studio 2022
 
-**Stato:** ✅ * Supportato (con nota).
+**Stato:** ⚠️ Situazione ambigua — verificare prima dell'adozione.
 
-- Tutte le edizioni (Community, Professional, Enterprise) funzionano su LTSC 2024
-- I requisiti ufficiali elencano "Windows 11 Enterprise" ma **non menzionano esplicitamente LTSC**
-- Nella pratica è pienamente funzionante (stesso kernel di Windows 11 Enterprise)
-- Aggiornamenti ricevuti normalmente tramite Visual Studio Installer
+La pagina ufficiale dei [requisiti di sistema VS 2022](https://learn.microsoft.com/en-us/visualstudio/releases/2022/system-requirements) elenca tra gli ambienti **non supportati**:
 
-> **Nota:** Il supporto è inferito dalla compatibilità con "Windows 11 Enterprise". Non esiste una dichiarazione esplicita di supporto per l'edizione LTSC.
+> *"Windows 10 Enterprise LTSC edition, Windows Enterprise IoT"*
+
+| Aspetto | Dettaglio |
+|---------|-----------|
+| Windows 11 Enterprise LTSC 2024 | **Non menzionato** esplicitamente (né supportato né escluso) |
+| Windows 10 Enterprise LTSC | ❌ Esplicitamente escluso |
+| Windows Enterprise IoT (tutte le versioni) | ❌ Esplicitamente escluso |
+| Funzionamento pratico su Win11 LTSC | Funzionante (stesso kernel di Win11 Enterprise) |
+
+**Raccomandazione:**
+- Su **Windows 11 Enterprise LTSC 2024**: VS2022 funziona ma il supporto Microsoft non è garantito. Usare a proprio rischio.
+- Su **IoT Enterprise LTSC**: esplicitamente non supportato.
+- Se serve un ambiente di sviluppo pienamente supportato, usare Windows 11 GA o una VM con Windows 11 Pro/Enterprise.
 
 ### SQL Server Management Studio (SSMS)
 
-**Stato:** ✅ Pienamente supportato.
+**Stato:** ❌ **NON supportato su edizioni LTSC.**
 
-- SSMS 22.x utilizza la shell Visual Studio 2022
-- Supporto esplicito per "Windows 11 minimum supported OS version"
-- Download diretto: [aka.ms/ssmsfullsetup](https://aka.ms/ssmsfullsetup)
+La pagina ufficiale dei [requisiti di sistema di SSMS 22](https://learn.microsoft.com/en-us/ssms/system-requirements) elenca esplicitamente tra i sistemi operativi **non supportati**:
+
+> *"Windows Enterprise LTSC editions"*
+
+| Aspetto | Dettaglio |
+|---------|-----------|
+| Installazione | Tecnicamente possibile, ma **non supportata** |
+| Supporto Microsoft | Nessuno — in caso di problemi non verrà fornita assistenza |
+| Motivo | SSMS 22 è basato sulla shell Visual Studio 2022, che esclude le edizioni LTSC |
+| Alternativa | Usare SSMS da una macchina con Windows 11 GA, oppure Azure Data Studio |
+
+> **Nota:** Anche Windows Enterprise IoT e Server IoT sono esplicitamente esclusi dal supporto SSMS 22.
 
 ### Microsoft Teams (New Client)
 
@@ -163,7 +181,7 @@ winget install Microsoft.Edge
 | Produttività office con cloud | Office LTSC 2024 (connettività M365 supportata fino a Ott 2029) |
 | Sviluppo software | Visual Studio 2022 + .NET 8+ |
 | Analisi dati | Power BI Desktop (MSI) |
-| Gestione database | SSMS 22.x |
+| Gestione database | Azure Data Studio o SSMS da macchina non-LTSC |
 | Comunicazione e collaborazione | Teams Web App (NO client desktop) |
 | Browser | Edge Chromium (installazione manuale) |
 | Automazione | PowerShell 7.x + Azure CLI |
