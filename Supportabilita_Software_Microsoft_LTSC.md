@@ -18,7 +18,7 @@ Windows 11 Enterprise LTSC 2024 e Windows 11 IoT Enterprise LTSC 2024 sono proge
 | .NET 9 (STS) | ✅ | ✅ | Maggio 2026 | x64, x86, Arm64 |
 | .NET Framework 4.8.1 | ✅ | ✅ | Incluso nel OS | Preinstallato |
 | Power BI Desktop | ✅ * | ✅ * | Continuo | Richiede .NET 4.7.2+ e WebView2 (*supporto inferito, non dichiarato esplicitamente per LTSC) |
-| Visual Studio 2022 | ⚠️ | ❌ | Continuo | Win10 LTSC escluso esplicitamente; Win11 LTSC non menzionato (né supportato né escluso); IoT escluso |
+| Visual Studio 2022 / 2026 | ❌ | ❌ | N/A | **Non supportato su LTSC** (policy esplicita Microsoft) |
 | SSMS 22.x | ❌ | ❌ | N/A | **Non supportato su edizioni LTSC** (esplicito nella doc) |
 | SQL Server 2022 | ✅ | ✅ | Gennaio 2028 (mainstream) | Pienamente supportato |
 | Microsoft Teams (new) | ❌ | ❌ | Bloccato dal 15/08/2025 | Non supportato su LTSC |
@@ -100,25 +100,25 @@ Requisiti:
 - WinGet: `winget install Microsoft.PowerBIDesktop`
 - Distribuzione Intune come Win32 app
 
-### Visual Studio 2022
+### Visual Studio 2022 / 2026
 
-**Stato:** ⚠️ Situazione ambigua — verificare prima dell'adozione.
+**Stato:** ❌ **NON supportato su edizioni LTSC.**
 
-La pagina ufficiale dei [requisiti di sistema VS 2022](https://learn.microsoft.com/en-us/visualstudio/releases/2022/system-requirements) elenca tra gli ambienti **non supportati**:
+La documentazione ufficiale Microsoft dichiara esplicitamente:
 
-> *"Windows 10 Enterprise LTSC edition, Windows Enterprise IoT"*
+> *"Visual Studio isn't intended to run on the Windows Long-term Servicing Channel (LTSC). However, building apps that run on Windows LTSC is supported."*
+
+Questo vale per **tutte le versioni** di Visual Studio (2022, 2026 e successive).
 
 | Aspetto | Dettaglio |
 |---------|-----------|
-| Windows 11 Enterprise LTSC 2024 | **Non menzionato** esplicitamente (né supportato né escluso) |
-| Windows 10 Enterprise LTSC | ❌ Esplicitamente escluso |
-| Windows Enterprise IoT (tutte le versioni) | ❌ Esplicitamente escluso |
-| Funzionamento pratico su Win11 LTSC | Funzionante (stesso kernel di Win11 Enterprise) |
+| Installazione su LTSC | ❌ Non supportata (nessuna edizione LTSC) |
+| Installazione su IoT Enterprise | ❌ Esplicitamente escluso |
+| Build di app destinate a LTSC | ✅ Supportato (da macchina non-LTSC) |
+| Motivo | VS richiede un OS con Modern Lifecycle e feature update |
+| Alternativa | Usare Windows 11 GA (Pro/Enterprise) o Windows Server |
 
-**Raccomandazione:**
-- Su **Windows 11 Enterprise LTSC 2024**: VS2022 funziona ma il supporto Microsoft non è garantito. Usare a proprio rischio.
-- Su **IoT Enterprise LTSC**: esplicitamente non supportato.
-- Se serve un ambiente di sviluppo pienamente supportato, usare Windows 11 GA o una VM con Windows 11 Pro/Enterprise.
+**Fonte:** [Visual Studio unsupported operating systems](https://learn.microsoft.com/en-us/troubleshoot/developer/visualstudio/installation/visual-studio-unsupported-operating-systems)
 
 ### SQL Server Management Studio (SSMS)
 
@@ -179,7 +179,7 @@ winget install Microsoft.Edge
 |----------|---------------------|
 | Produttività office disconnessa | Office LTSC 2024 |
 | Produttività office con cloud | Office LTSC 2024 (connettività M365 supportata fino a Ott 2029) |
-| Sviluppo software | Visual Studio 2022 + .NET 8+ |
+| Sviluppo software | Visual Studio da macchina non-LTSC (Win11 GA o Windows Server) |
 | Analisi dati | Power BI Desktop (MSI) |
 | Gestione database | Azure Data Studio o SSMS da macchina non-LTSC |
 | Comunicazione e collaborazione | Teams Web App (NO client desktop) |
