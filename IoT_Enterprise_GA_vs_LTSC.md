@@ -69,9 +69,9 @@ L'attivazione KMS per IoT Enterprise GA usa la stessa GVLK della versione LTSC:
 | Edizione | GVLK |
 |----------|------|
 | Windows 11 IoT Enterprise LTSC 2024 | `KBN8V-HFGQ4-MGXVD-347P6-PDQGT` |
-| Windows 11 IoT Enterprise (GA) | Stessa GVLK della versione Enterprise corrispondente |
+| Windows 11 IoT Enterprise 24H2 (GA) | `XQQYW-NFFMW-XJPTT-K8732-CKFFD` |
 
-> **Nota:** Verificare sul portale VLSC la chiave specifica per la versione GA in uso (24H2, 25H2, ecc.)
+> **Nota:** La GVLK per IoT Enterprise GA è specifica per edizione e diversa sia da Enterprise standard sia da IoT LTSC. Assicurarsi che il server KMS sia aggiornato per supportare client Windows 11 24H2.
 
 ---
 
