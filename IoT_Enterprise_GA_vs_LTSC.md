@@ -133,6 +133,37 @@ Le capacità di personalizzazione sono **identiche** tra GA e LTSC:
 
 ---
 
+## Gestione dispositivi: Intune e SCCM (Configuration Manager)
+
+**Entrambe** le edizioni IoT Enterprise (GA e LTSC) sono **pienamente supportate** sia da Microsoft Intune che da SCCM/Configuration Manager.
+
+| Strumento | IoT Enterprise GA | IoT Enterprise LTSC | Riferimento |
+|-----------|:-----------------:|:-------------------:|-------------|
+| Microsoft Intune | ✅ Supportato | ✅ Supportato | [Intune Supported OS](https://learn.microsoft.com/en-us/intune/fundamentals/supported-devices-browsers) |
+| SCCM / ConfigMgr | ✅ Supportato | ✅ Supportato | [Device Management Overview](https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/device-management/device-management-overview) |
+| Azure Arc | ✅ Supportato | ✅ Supportato | Documentazione Azure Arc |
+| Co-management (Intune + SCCM) | ✅ Supportato | ✅ Supportato | — |
+
+### Dettagli chiave
+
+- **Intune** elenca esplicitamente "Windows 11 IoT Enterprise" tra gli OS supportati, senza distinzione GA/LTSC — entrambi sono gestibili.
+- **SCCM/ConfigMgr** supporta IoT Enterprise come qualsiasi altro client Windows Enterprise. Si installa il client ConfigMgr standard e si gestiscono inventory, patching, compliance e software deployment normalmente.
+- **Nessuna limitazione funzionale**: policy di conformità, configuration profiles, app deployment, Windows Update for Business (su GA), WSUS/SCCM patching — tutto funziona su entrambe le edizioni.
+- **Enrollment Intune**: funziona con Autopilot, bulk enrollment, Azure AD Join, o enrollment manuale su entrambe le edizioni.
+
+### Differenza pratica per il patching
+
+| Aspetto | IoT Enterprise GA | IoT Enterprise LTSC |
+|---------|:-----------------:|:-------------------:|
+| Windows Update for Business (WUfB) | ✅ Feature + Quality updates | Solo Quality updates |
+| Feature update via Intune | ✅ Gestibile | N/A (nessun feature update) |
+| WSUS / SCCM patching | ✅ | ✅ |
+| Cumulative Update mensile | ✅ | ✅ |
+
+> **In sintesi:** Non c'è differenza nella gestibilità tra GA e LTSC. Entrambe sono "first-class citizens" sia in Intune che in SCCM. La differenza sta solo nel tipo di aggiornamenti disponibili (feature update solo su GA).
+
+---
+
 ## Riferimenti documentazione Microsoft
 
 - [Windows IoT Enterprise Overview](https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/overview)
