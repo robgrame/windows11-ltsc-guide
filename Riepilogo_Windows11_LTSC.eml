@@ -40,6 +40,28 @@ li { margin: 4px 0; }
 
 <hr>
 
+<h2>Prefazione: Le edizioni Windows 11 per scenari specializzati</h2>
+
+<p>Microsoft offre diverse edizioni di Windows 11 pensate per scenari che vanno oltre la postazione di lavoro tradizionale. Comprendere le differenze &egrave; fondamentale per scegliere l'edizione corretta e prevedere le implicazioni su software, aggiornamenti e ciclo di vita dei dispositivi.</p>
+
+<h3>Windows 11 Enterprise LTSC (Long-Term Servicing Channel)</h3>
+<p>Edizione progettata per <strong>workstation che richiedono stabilit&agrave; assoluta</strong> e non necessitano di feature update. Il sistema operativo viene rilasciato in una versione "congelata" che riceve esclusivamente aggiornamenti di sicurezza per <strong>5 anni</strong>. Tipicamente impiegata in scenari regolamentati, ambienti di produzione industriale, o postazioni dove le modifiche al sistema devono essere ridotte al minimo. Non include Microsoft Store, app consumer, n&eacute; Copilot.</p>
+
+<h3>Windows 11 IoT Enterprise LTSC</h3>
+<p>Variante della precedente destinata a <strong>dispositivi embedded e special-purpose</strong> con un ciclo di supporto esteso a <strong>10 anni</strong>. Include tutte le funzionalit&agrave; di Enterprise LTSC pi&ugrave; un set di feature dedicate alla protezione e al lockdown del dispositivo: <em>Unified Write Filter</em> (protezione disco in RAM), <em>Shell Launcher</em> (sostituzione dell'interfaccia Windows con un'app custom), <em>Keyboard Filter</em> e <em>Custom Logon</em>. Ideale per chioschi, ATM, dispositivi medicali, SCADA e digital signage.</p>
+
+<h3>Windows 11 IoT Enterprise GA (General Availability Channel)</h3>
+<p>Edizione meno nota ma strategicamente importante: offre le <strong>stesse feature embedded di IoT LTSC</strong> (UWF, Shell Launcher, Keyboard Filter) ma segue il modello di servicing standard con <strong>feature update annuali</strong> e supporto di <strong>36 mesi per versione</strong>. Questo la rende compatibile con software che richiede un OS aggiornato (Teams, Microsoft 365 Apps) pur mantenendo le capacit&agrave; di lockdown IoT. &Egrave; la scelta giusta quando servono sia le feature embedded sia la compatibilit&agrave; software moderna, a patto di accettare aggiornamenti periodici.</p>
+
+<div class="info">
+<strong>&#x2139;&#xFE0F; In sintesi:</strong><br>
+&#8226; <strong>Enterprise LTSC</strong> = stabilit&agrave; 5 anni, workstation specializzate<br>
+&#8226; <strong>IoT Enterprise LTSC</strong> = stabilit&agrave; 10 anni + lockdown embedded, dispositivi mission-critical<br>
+&#8226; <strong>IoT Enterprise GA</strong> = lockdown embedded + feature update, dispositivi IoT con esigenze software moderne
+</div>
+
+<hr>
+
 <h2>1. Mappa delle edizioni Windows 11 IoT / LTSC</h2>
 
 <p class="section-intro">Il naming Microsoft pu&ograve; generare confusione. Ecco una mappa chiara delle edizioni analizzate:</p>
