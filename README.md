@@ -10,6 +10,7 @@ Raccolta di documentazione operativa per la gestione di Windows 11 Enterprise LT
 | [Intune_StoreApps_Windows11_LTSC.md](Intune_StoreApps_Windows11_LTSC.md) | Distribuzione app Store tramite Intune su LTSC |
 | [Personalizzazione_Immagine_Windows11_LTSC.md](Personalizzazione_Immagine_Windows11_LTSC.md) | Creazione e personalizzazione immagine OS |
 | [Supportabilita_Software_Microsoft_LTSC.md](Supportabilita_Software_Microsoft_LTSC.md) | Matrice compatibilità software Microsoft su LTSC |
+| [IoT_Enterprise_GA_vs_LTSC.md](IoT_Enterprise_GA_vs_LTSC.md) | Confronto IoT Enterprise GA vs LTSC — differenze, software supportato, scelta |
 
 ## Disclaimer
 
